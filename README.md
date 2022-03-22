@@ -1,5 +1,5 @@
 # BLE_Web_App
-Studienarbeit von Niklas Stöcklein, MT19A
+Studienarbeit von Niklas Stöcklein, MT19A, 
 Betreuer: Alexander Wilke
 
 ## Wichtige Links
