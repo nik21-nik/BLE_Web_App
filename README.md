@@ -26,3 +26,8 @@ Betreuer: Alexander Wilke
 
 - [Einleitung?:](https://www.heise.de/developer/artikel/Features-von-uebermorgen-die-Web-Bluetooth-API-3167796.html)
 - [Introduction to Bluetooth Low Energy](https://learn.adafruit.com/introduction-to-bluetooth-low-energy/introduction)
+- [W3C Web Bluetooth Reference](https://webbluetoothcg.github.io/web-bluetooth/)
+
+
+## Tipps
+- mit about://bluetooth-internals können in Chrome alle Bluetooth Module in der Nähe untersucht werden (Services und Characteristics)
