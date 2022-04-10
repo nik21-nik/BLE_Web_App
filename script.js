@@ -1,13 +1,52 @@
 var deviceName = "MOSbot";
-var bluetoothDeviceDetected;
 var bleService = '49535343-fe7d-4ae5-8fa9-9fafd205e455';
-var bleCharacteristic = '49535343-1e4d-4bd9-ba61-23c647249616';
-var gattCharacteristic;
+var bleCharacteristic_TX = '49535343-1e4d-4bd9-ba61-23c647249616';
+var bleCharacteristic_RX = '49535343-8841-43f4-a8d4-ecbe34729bb3';
+var global_gattCharacteristic_TX;
+var global_gattCharacteristic_RX;
+var global_service;
+var bluetoothDeviceDetected;
+var RX_Characteristic;
 
-document.querySelector("#connect").addEventListener("click", function () {
-    if (isWebBluetoothEnabled()) {
-        connect();
-        //start();
+document.querySelector("#connect").addEventListener("click", async () => {
+    try {
+        if (isWebBluetoothEnabled()) {
+            const device = await navigator.bluetooth.requestDevice({ 
+                optionalServices: [bleService],
+                // acceptAllDevices: true,      // Option to accept all devices
+                filters: [{ name: deviceName }], 
+            })
+        
+            let bluetoothDeviceDetected = device.gatt.device.name;
+        
+            // Connect to the GATT server
+            console.log('Getting GATT Service...')
+            const server = await device.gatt.connect();
+        
+            // Getting the services we mentioned before through GATT server
+            console.log('Getting GATT Service...')
+            const MOSbot_service = await server.getPrimaryService(bleService);
+        
+            // Getting Characteristic for receiving data (BLE -> TX)…
+            console.log('Getting GATT Characteristic TX...')
+            const TX_Characterisic = await MOSbot_service.getCharacteristic(bleCharacteristic_TX);
+        
+            TX_Characterisic.startNotifications().then(() => {
+                TX_Characterisic.addEventListener(
+                    'characteristicvaluechanged', handleNotifications
+                );
+            });
+        
+              
+            // Getting Characteristic for transmitting data (BLE -> RX)…
+            console.log('Getting GATT Characteristic RX...')
+            RX_Characteristic = await MOSbot_service.getCharacteristic(bleCharacteristic_RX);
+            console.log('Connection successfull.');
+        }
+    } 
+    catch(err) {
+      console.error(err);
+      alert("An error occured while connecting");
     }
 });
 
@@ -17,14 +56,16 @@ document.querySelector("#disconnect").addEventListener("click", function () {
     }
 });
 
-document.querySelector('#start').addEventListener('click', function(event) {
+document.querySelector('#rot_an').addEventListener('click', function() {
     if (isWebBluetoothEnabled()) { 
-        start() 
+        Rot_an() 
     }
 })
 
-  document.querySelector('#stop').addEventListener('click', function(event) {
-    if (isWebBluetoothEnabled()) { stop() }
+  document.querySelector('#rot_aus').addEventListener('click', function() {
+    if (isWebBluetoothEnabled()) { 
+        Rot_aus() 
+    }
 })
 
 
@@ -39,92 +80,25 @@ function isWebBluetoothEnabled() {
     return true;
 }
 
-function connect() {
-    return bluetoothDeviceDetected ? Promise.resolve() : getDeviceInfo()
-    .then(connectGATT)
-    // .then((_) => {
-    //     //console.log("Reading UV Index...");
-    //     //return gattCharacteristic.readValue();
-    // })
-    .catch((error) => {
-      console.log("Waiting to start reading: " + error);
-    });
-}
 
-function getDeviceInfo() {
-    let options = {
-        optionalServices: [bleService],
-        // acceptAllDevices: true, // Option to accept all devices
-        filters: [{ name: deviceName }],
-    };
-
-    // Auswahl der Bluetooth Geräte in Pop-Up-Fenster
-    console.log("Requesting any Bluetooth Device...");
-    return navigator.bluetooth.requestDevice(options)
-    .then((device) => {
-        bluetoothDeviceDetected = device;
-    })
-    .catch((error) => {
-        console.log("Argh! " + error);
-    });
-}
-
-
-function connectGATT() {
-    if (bluetoothDeviceDetected.gatt.connected && gattCharacteristic) {
-      return Promise.resolve()
-    }
-
-    return bluetoothDeviceDetected.gatt.connect()
-    .then(server => {
-      console.log('Getting GATT Service...')
-      return server.getPrimaryService(bleService)
-    })
-    .then(service => {
-      console.log('Getting GATT Characteristic...')
-      return service.getCharacteristic(bleCharacteristic)
-    })
-    .then(characteristic => {
-      gattCharacteristic = characteristic
-      gattCharacteristic.addEventListener('characteristicvaluechanged',
-          handleChangedValue)
-      document.querySelector('#start').disabled = false
-      document.querySelector('#stop').disabled = true
-    })
-}
-
-function handleChangedValue(event) {
+function handleNotifications(event) {
     let value = event.target.value.getUint8(0)
-    if(value == "48"){
-        document.getElementById("output").innerHTML = "rot";        //read();
+    if(value == 1){
+        document.getElementById("output").innerHTML = "Rot An";        //read();
     }
-    if(value == "49"){
-        document.getElementById("output").innerHTML = "grün";        //read();
+    if(value == 2){
+        document.getElementById("output").innerHTML = "Rot Aus";        //read();
     }
     var now = new Date()
     console.log('> ' + now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds() + ' RGB Color ' + value)
 }
 
-function start() {
-    gattCharacteristic.startNotifications()
-    .then(_ => {
-        console.log('Start reading...')
-        document.querySelector('#start').disabled = true
-        document.querySelector('#stop').disabled = false
-    })
-    .catch(error => {
-        console.log('[ERROR] Start: ' + error)
-    })
+
+
+function Rot_an(){
+    RX_Characteristic.writeValue(Uint8Array.of(1));
 }
 
-function stop() {
-    gattCharacteristic.stopNotifications()
-    .then(_ => {
-      console.log('Stop reading...')
-      document.querySelector('#start').disabled = false
-      document.querySelector('#stop').disabled = true
-    })
-    .catch(error => {
-      console.log('[ERROR] Stop: ' + error)
-    })
+function Rot_aus(){
+    RX_Characteristic.writeValue(Uint8Array.of(2));
 }
