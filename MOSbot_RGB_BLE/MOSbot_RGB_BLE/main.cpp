@@ -65,7 +65,7 @@ char BLE_READY[5] 					= "CMD>";
 char COMMAND_SUCCESS[4] 			= "AOK";
 char COMMAND_ERROR[4] 				= "ERR";
 
-
+uint8_t received_int = 1;
 
 // function prototypes //////////////////////////////////////////////////////////////////////////
 void rgb_led(int red, int green, int blue);
@@ -78,7 +78,7 @@ void uart1_char_send (char data);
 void uart1_string_send (char *data);
 void uart1_string_send_n (char *data);
 void uart1_string_send_rn (char *data);
-void uart1_int_send (int data);
+void uart1_int_send (uint8_t data);
 
 
 
@@ -143,6 +143,8 @@ int main()
 	PORTD &= ~( (1<<PD4) | (1<<PD5) | (1<<PD5));// 			 for RGB LED
 	
 	
+	sei();
+
 	USART1_Init();
 
 
@@ -161,16 +163,28 @@ int main()
 
 	// ******************************************************************************************
 	ble_enable();
-	//uart1_string_send_n("text an BLE Modul");
+	//while(received_int != 0);				// Abwarten bis Verbindung zum BLE-Modul aufgebaut wurde
+	rgb_led(0,1,0);
+	_delay_ms(1000);
+	rgb_led(0,0,0);
 
 	while(1)
 	{
-		rgb_led(1,0,0);
-		_delay_ms(1000);
+		if(received_int == 1)
+		{
+			rgb_led(1,0,0);
+		}
+		if(received_int == 2)
+		{
+			rgb_led(0,0,0);
+		}
+		
+		//rgb_led(1,0,0);
+		//_delay_ms(1000);
 		//rgb_led(0,1,0);
 		//_delay_ms(2000);
-		rgb_led(0,0,0);
-		_delay_ms(5000);
+		//rgb_led(0,0,0);
+		//_delay_ms(5000);
 
 	} // end while(1)
 
@@ -185,7 +199,7 @@ int main()
 // functions for UART ###########################################################################
 
 // **********************************************************************************************
-// int send (1byte)
+// int send (1byte) 
 void uart1_int_send (uint8_t data)
 {
 	while (!(UCSR1A & (1<<UDRE1)))
@@ -343,6 +357,14 @@ void ble_reset()
 	ble_hardware_reset(false);
 }
 
+
+ISR(USART1_RX_vect){
+	/* Wait for data to be received */
+	while ( !(UCSR1A & (1<<RXC1)) );			// ist wahrscheinlich nicht nötig, weil Interrupt nur mit dieser Bedinung erfolgt
+	
+	/* Get and return received data from buffer */
+	received_int = UDR1;
+}
 
 
 //###############################################################################################

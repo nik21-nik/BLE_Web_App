@@ -1,8 +1,9 @@
 
 # Protokoll zwischen Web App und BLE-Modul bzw. µC
 
-|µC (uint8)      |HTML (uint8)        |Beschreibung (Rot, Grün, Blau)   |
+|µC (uint8)      |HTML (uint8)        |Beschreibung                     |
 |----------------|--------------------|---------------------------------|
+|0               |0                   |Verbindung erfolgreich           |
 |1               |1                   |Rot eingeschaltet                |
 |2               |2                   |Rot ausgeschaltet                |
 |3               |3                   |Grün eingeschaltet               |

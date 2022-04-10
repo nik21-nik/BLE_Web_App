@@ -41,6 +41,8 @@ document.querySelector("#connect").addEventListener("click", async () => {
             // Getting Characteristic for transmitting data (BLE -> RX)…
             console.log('Getting GATT Characteristic RX...')
             RX_Characteristic = await MOSbot_service.getCharacteristic(bleCharacteristic_RX);
+            
+            RX_Characteristic.writeValue(Uint8Array.of(0));
             console.log('Connection successfull.');
         }
     } 
