@@ -6,12 +6,21 @@ var gattCharacteristic;
 
 document.querySelector("#connect").addEventListener("click", function () {
     if (isWebBluetoothEnabled()) {
-        read();
+        connect();
+        //start();
+    }
+});
+
+document.querySelector("#disconnect").addEventListener("click", function () {
+    if (isWebBluetoothEnabled()) {
+        //hier das Gerät disconnecten!
     }
 });
 
 document.querySelector('#start').addEventListener('click', function(event) {
-    if (isWebBluetoothEnabled()) { start() }
+    if (isWebBluetoothEnabled()) { 
+        start() 
+    }
 })
 
   document.querySelector('#stop').addEventListener('click', function(event) {
@@ -19,11 +28,7 @@ document.querySelector('#start').addEventListener('click', function(event) {
 })
 
 
-document.querySelector("#get_info").addEventListener("click", function () {
-    if (isWebBluetoothEnabled()) {
-        document.getElementById("output").innerHTML = received_info;        //read();
-    }
-});
+
 
 function isWebBluetoothEnabled() {
     if (!navigator.bluetooth) {
@@ -34,13 +39,13 @@ function isWebBluetoothEnabled() {
     return true;
 }
 
-function read() {
+function connect() {
     return bluetoothDeviceDetected ? Promise.resolve() : getDeviceInfo()
     .then(connectGATT)
-    .then((_) => {
-        console.log("Reading UV Index...");
-        return gattCharacteristic.readValue();
-    })
+    // .then((_) => {
+    //     //console.log("Reading UV Index...");
+    //     //return gattCharacteristic.readValue();
+    // })
     .catch((error) => {
       console.log("Waiting to start reading: " + error);
     });
@@ -55,8 +60,7 @@ function getDeviceInfo() {
 
     // Auswahl der Bluetooth Geräte in Pop-Up-Fenster
     console.log("Requesting any Bluetooth Device...");
-    return navigator.bluetooth
-    .requestDevice(options)
+    return navigator.bluetooth.requestDevice(options)
     .then((device) => {
         bluetoothDeviceDetected = device;
     })
@@ -91,6 +95,12 @@ function connectGATT() {
 
 function handleChangedValue(event) {
     let value = event.target.value.getUint8(0)
+    if(value == "48"){
+        document.getElementById("output").innerHTML = "rot";        //read();
+    }
+    if(value == "49"){
+        document.getElementById("output").innerHTML = "grün";        //read();
+    }
     var now = new Date()
     console.log('> ' + now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds() + ' RGB Color ' + value)
 }
