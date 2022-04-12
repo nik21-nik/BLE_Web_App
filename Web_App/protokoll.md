@@ -3,10 +3,11 @@
 
 |µC (uint8)      |HTML (uint8)        |Beschreibung                     |
 |----------------|--------------------|---------------------------------|
-|0               |0                   |Verbindung erfolgreich           |
-|1               |1                   |Rot eingeschaltet                |
-|2               |2                   |Rot ausgeschaltet                |
-|3               |3                   |Grün eingeschaltet               |
-|4               |4                   |Grün ausgeschaltet               |
-|5               |5                   |Blau eingeschaltet               |
-|6               |6                   |Blau ausgeschaltet               |
+|0               |0                   |Default-Wert (keine Aussage)     |
+|1               |1                   |Verbindung erfolgreich           |
+|2               |2                   |Rot eingeschaltet                |
+|3               |3                   |Rot ausgeschaltet                |
+|4               |4                   |Grün eingeschaltet               |
+|5               |5                   |Grün ausgeschaltet               |
+|6               |6                   |Blau eingeschaltet               |
+|7               |7                   |Blau ausgeschaltet               |

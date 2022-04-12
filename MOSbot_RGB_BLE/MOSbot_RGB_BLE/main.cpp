@@ -65,7 +65,7 @@ char BLE_READY[5] 					= "CMD>";
 char COMMAND_SUCCESS[4] 			= "AOK";
 char COMMAND_ERROR[4] 				= "ERR";
 
-uint8_t received_int = 1;
+uint8_t received_int = 0;
 
 // function prototypes //////////////////////////////////////////////////////////////////////////
 void rgb_led(int red, int green, int blue);
@@ -163,28 +163,36 @@ int main()
 
 	// ******************************************************************************************
 	ble_enable();
-	//while(received_int != 0);				// Abwarten bis Verbindung zum BLE-Modul aufgebaut wurde
-	rgb_led(0,1,0);
-	_delay_ms(1000);
-	rgb_led(0,0,0);
+	while(received_int != 1);				// Abwarten bis Verbindung zum BLE-Modul aufgebaut wurde
+	DDRD |= (1<<DDD5); 						// HIGH = LED on --> Gruene LED kurz anmachen, ohne dass Feedback gegeben wird!
+	_delay_ms(200);
+	DDRD &= ~(1<<DDD5);						// LOW = LED off
+
+
+
 
 	while(1)
 	{
-		if(received_int == 1)
-		{
-			rgb_led(1,0,0);
-		}
-		if(received_int == 2)
-		{
-			rgb_led(0,0,0);
-		}
+		 if(received_int == 2)
+		 {
+		 	rgb_led(1,0,0);
+			received_int = 0;
+		 }
+		 if(received_int == 3)
+		 {
+		 	rgb_led(0,0,0);
+			received_int = 0;
+		 }
+		 //if(received_int == 1 || received_int == 2){
+			 //while(1){}
+		 //}
 		
 		//rgb_led(1,0,0);
 		//_delay_ms(1000);
-		//rgb_led(0,1,0);
-		//_delay_ms(2000);
+		//// rgb_led(0,1,0);
+		//// _delay_ms(2000);
 		//rgb_led(0,0,0);
-		//_delay_ms(5000);
+		//_delay_ms(3000);
 
 	} // end while(1)
 
@@ -207,8 +215,8 @@ void uart1_int_send (uint8_t data)
 		// wait until sending is possible
 	}
 	UDR1 = data;
-	uart1_char_send(0x0D);	// \r
-	uart1_char_send(0x0A);	// \n
+	//uart1_char_send(0x0D);	// \r
+	//uart1_char_send(0x0A);	// \n
 }
 
 
@@ -279,34 +287,34 @@ void rgb_led(int red, int green, int blue)
 	if (red)
 	{
 		DDRD |= (1<<DDD6); 							// HIGH = LED on
-		uart1_int_send(1);
+		uart1_int_send(2);
 	}
 	else
 	{		
 		DDRD &= ~(1<<DDD6);							// LOW = LED off
-		uart1_int_send(2);
+		uart1_int_send(3);
 	}
 	
 	if (green)
 	{
 		DDRD |= (1<<DDD5); 							// HIGH = LED on
-		uart1_int_send(3);
+		uart1_int_send(4);
 	}
 	else
 	{		
 		DDRD &= ~(1<<DDD5);							// LOW = LED off
-		uart1_int_send(4);
+		uart1_int_send(5);
 	}
 	
 	if (blue)
 	{
 		DDRD |= (1<<DDD4); 							// HIGH = LED on
-		uart1_int_send(5);
+		uart1_int_send(6);
 	}
 	else
 	{		
 		DDRD &= ~(1<<DDD4);							// LOW = LED off
-		uart1_int_send(6);
+		uart1_int_send(7);
 	}
 }
 
@@ -360,7 +368,7 @@ void ble_reset()
 
 ISR(USART1_RX_vect){
 	/* Wait for data to be received */
-	while ( !(UCSR1A & (1<<RXC1)) );			// ist wahrscheinlich nicht nötig, weil Interrupt nur mit dieser Bedinung erfolgt
+	while ( !(UCSR1A & (1<<RXC1)) );			// ist wahrscheinlich nicht noetig, weil Interrupt nur mit dieser Bedinung erfolgt
 	
 	/* Get and return received data from buffer */
 	received_int = UDR1;

@@ -8,7 +8,7 @@ var global_service;
 var bluetoothDeviceDetected;
 var RX_Characteristic;
 
-document.querySelector("#connect").addEventListener("click", async () => {
+document.querySelector("#connect").addEventListener("click", async () => {                      // async-Funktion: https://blog.logrocket.com/build-bluetooth-app-chrome-bluetooth-web-api/
     try {
         if (isWebBluetoothEnabled()) {
             const device = await navigator.bluetooth.requestDevice({ 
@@ -20,7 +20,7 @@ document.querySelector("#connect").addEventListener("click", async () => {
             let bluetoothDeviceDetected = device.gatt.device.name;
         
             // Connect to the GATT server
-            console.log('Getting GATT Service...')
+            console.log('Connect...')
             const server = await device.gatt.connect();
         
             // Getting the services we mentioned before through GATT server
@@ -42,7 +42,7 @@ document.querySelector("#connect").addEventListener("click", async () => {
             console.log('Getting GATT Characteristic RX...')
             RX_Characteristic = await MOSbot_service.getCharacteristic(bleCharacteristic_RX);
             
-            RX_Characteristic.writeValue(Uint8Array.of(0));
+            RX_Characteristic.writeValue(Uint8Array.of(1));
             console.log('Connection successfull.');
         }
     } 
@@ -85,10 +85,10 @@ function isWebBluetoothEnabled() {
 
 function handleNotifications(event) {
     let value = event.target.value.getUint8(0)
-    if(value == 1){
+    if(value == 2){
         document.getElementById("output").innerHTML = "Rot An";        //read();
     }
-    if(value == 2){
+    if(value == 3){
         document.getElementById("output").innerHTML = "Rot Aus";        //read();
     }
     var now = new Date()
@@ -98,9 +98,9 @@ function handleNotifications(event) {
 
 
 function Rot_an(){
-    RX_Characteristic.writeValue(Uint8Array.of(1));
+    RX_Characteristic.writeValue(Uint8Array.of(2));
 }
 
 function Rot_aus(){
-    RX_Characteristic.writeValue(Uint8Array.of(2));
+    RX_Characteristic.writeValue(Uint8Array.of(3));
 }
