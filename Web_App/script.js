@@ -1,3 +1,6 @@
+//###############################################################################################
+// global variables /////////////////////////////////////////////////////////////////////////////
+
 var deviceName = "MOSbot";
 var bleService = '49535343-fe7d-4ae5-8fa9-9fafd205e455';
 var bleCharacteristic_TX = '49535343-1e4d-4bd9-ba61-23c647249616';
@@ -5,8 +8,20 @@ var bleCharacteristic_RX = '49535343-8841-43f4-a8d4-ecbe34729bb3';
 var global_gattCharacteristic_TX;
 var global_gattCharacteristic_RX;
 var global_service;
-var bluetoothDeviceDetected;
 var RX_Characteristic;
+
+// Protocol /////////////////////////////////////////////////////////////////////////////
+
+const con_successful   = 1;
+const red_1            = 2;
+const red_0            = 3;
+const green_1          = 4;
+const green_0          = 5;
+const blue_1           = 6;
+const blue_0           = 7;
+
+//###############################################################################################
+// Event Listeners /////////////////////////////////////////////////////////////////////////////
 
 document.querySelector("#connect").addEventListener("click", async () => {                      // async-Funktion: https://blog.logrocket.com/build-bluetooth-app-chrome-bluetooth-web-api/
     try {
@@ -15,20 +30,18 @@ document.querySelector("#connect").addEventListener("click", async () => {      
                 optionalServices: [bleService],
                 // acceptAllDevices: true,      // Option to accept all devices
                 filters: [{ name: deviceName }], 
-            })
-        
-            let bluetoothDeviceDetected = device.gatt.device.name;
+            });
         
             // Connect to the GATT server
-            console.log('Connect...')
+            console.log('Connect...');
             const server = await device.gatt.connect();
         
             // Getting the services we mentioned before through GATT server
-            console.log('Getting GATT Service...')
+            console.log('Getting GATT Service...');
             const MOSbot_service = await server.getPrimaryService(bleService);
         
             // Getting Characteristic for receiving data (BLE -> TX)…
-            console.log('Getting GATT Characteristic TX...')
+            console.log('Getting GATT Characteristic TX...');
             const TX_Characterisic = await MOSbot_service.getCharacteristic(bleCharacteristic_TX);
         
             TX_Characterisic.startNotifications().then(() => {
@@ -39,7 +52,7 @@ document.querySelector("#connect").addEventListener("click", async () => {      
         
               
             // Getting Characteristic for transmitting data (BLE -> RX)…
-            console.log('Getting GATT Characteristic RX...')
+            console.log('Getting GATT Characteristic RX...');
             RX_Characteristic = await MOSbot_service.getCharacteristic(bleCharacteristic_RX);
             
             RX_Characteristic.writeValue(Uint8Array.of(1));
@@ -48,7 +61,7 @@ document.querySelector("#connect").addEventListener("click", async () => {      
     } 
     catch(err) {
       console.error(err);
-      alert("An error occured while connecting");
+      //alert("An error occured while connecting");
     }
 });
 
@@ -59,19 +72,44 @@ document.querySelector("#disconnect").addEventListener("click", function () {
 });
 
 document.querySelector('#rot_an').addEventListener('click', function() {
-    if (isWebBluetoothEnabled()) { 
-        Rot_an() 
-    }
+    // if (isWebBluetoothEnabled()) { 
+        func_Rot_an();
+    // }
 })
 
   document.querySelector('#rot_aus').addEventListener('click', function() {
-    if (isWebBluetoothEnabled()) { 
-        Rot_aus() 
-    }
+    // if (isWebBluetoothEnabled()) { 
+        func_Rot_aus();
+    // }
+})
+
+document.querySelector('#gruen_an').addEventListener('click', function() {
+    // if (isWebBluetoothEnabled()) { 
+        func_Gruen_an();
+    // }
+})
+
+  document.querySelector('#gruen_aus').addEventListener('click', function() {
+    // if (isWebBluetoothEnabled()) { 
+        func_Gruen_aus();
+    // }
+})
+
+document.querySelector('#blau_an').addEventListener('click', function() {
+    // if (isWebBluetoothEnabled()) { 
+        func_Blau_an();
+    // }
+})
+
+  document.querySelector('#blau_aus').addEventListener('click', function() {
+    // if (isWebBluetoothEnabled()) { 
+        func_Blau_aus();
+    // }
 })
 
 
-
+//###############################################################################################
+// Functions /////////////////////////////////////////////////////////////////////////////
 
 function isWebBluetoothEnabled() {
     if (!navigator.bluetooth) {
@@ -84,23 +122,71 @@ function isWebBluetoothEnabled() {
 
 
 function handleNotifications(event) {
-    let value = event.target.value.getUint8(0)
-    if(value == 2){
-        document.getElementById("output").innerHTML = "Rot An";        //read();
+    let value = event.target.value.getUint8(0);
+    // if(value == red_1){
+    //     document.getElementById("output").innerHTML = "Rot An";
+    // }
+    // if(value == red_0){
+    //     document.getElementById("output").innerHTML = "Rot Aus";
+    // }
+
+    switch (value) {
+        case red_1:
+            document.getElementById("output").innerHTML = "Rot An";
+            break;
+        
+        case red_0:
+            document.getElementById("output").innerHTML = "Rot Aus";
+            break;
+
+        case green_1:
+            document.getElementById("output").innerHTML = "Grün An";
+            break;
+        
+        case green_0:
+            document.getElementById("output").innerHTML = "Grün Aus";
+            break;
+
+        case blue_1:
+            document.getElementById("output").innerHTML = "Blau An";
+            break;
+        
+        case blue_0:
+            document.getElementById("output").innerHTML = "Blau Aus";
+            break;
+
+        default:
+            document.getElementById("output").innerHTML = "Unknown data";
+            break;
     }
-    if(value == 3){
-        document.getElementById("output").innerHTML = "Rot Aus";        //read();
-    }
-    var now = new Date()
-    console.log('> ' + now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds() + ' RGB Color ' + value)
+
+    
+    var now = new Date();
+    console.log('> ' + now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds() + ' Data: ' + value);
 }
 
 
 
-function Rot_an(){
-    RX_Characteristic.writeValue(Uint8Array.of(2));
+function func_Rot_an(){
+    RX_Characteristic.writeValue(Uint8Array.of(red_1));
 }
 
-function Rot_aus(){
-    RX_Characteristic.writeValue(Uint8Array.of(3));
+function func_Rot_aus(){
+    RX_Characteristic.writeValue(Uint8Array.of(red_0));
+}
+
+function func_Gruen_an(){
+    RX_Characteristic.writeValue(Uint8Array.of(green_1));
+}
+
+function func_Gruen_aus(){
+    RX_Characteristic.writeValue(Uint8Array.of(green_0));
+}
+
+function func_Blau_an(){
+    RX_Characteristic.writeValue(Uint8Array.of(blue_1));
+}
+
+function func_Blau_aus(){
+    RX_Characteristic.writeValue(Uint8Array.of(blue_0));
 }

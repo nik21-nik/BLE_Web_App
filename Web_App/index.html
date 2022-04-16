@@ -6,6 +6,16 @@
     <title>MOSbots BLE Web App</title>
     <style>
       /* hier kommt der CSS Code rein*/
+      body {
+        background-color: black;
+        color: grey;
+        font-size: 25px;
+      }
+
+      .white-mode {
+        background-color: white;
+        color: black;
+      }
     </style>
   </head>
   <body>
@@ -16,7 +26,20 @@
     <p></p>
     <button id="rot_an">Rot an</button>
     <button id="rot_aus">Rot aus</button>
-    <p id="output"></p>    
-    <script src="script.js"></script>
+    <button id="gruen_an">Grün an</button>
+    <button id="gruen_aus">Grün aus</button>
+    <button id="blau_an">Blau an</button>
+    <button id="blau_aus">Blau aus</button>
+
+    <p id="output"></p>
+    <button onclick="myFunction()">Toggle dark mode</button>   
+    <script>
+      function myFunction() {
+        var element = document.body;
+        element.classList.toggle("white-mode");
+      }
+    </script>
+    <script src="script.js">
+    </script>
   </body>
 </html>

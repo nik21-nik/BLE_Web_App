@@ -65,10 +65,21 @@ char BLE_READY[5] 					= "CMD>";
 char COMMAND_SUCCESS[4] 			= "AOK";
 char COMMAND_ERROR[4] 				= "ERR";
 
-uint8_t received_int = 0;
+// Variables for communication
+volatile uint8_t received_int = 0;
+volatile bool interrupt_flag = false;
+
+const uint8_t default_value    = 0;
+const uint8_t con_successful   = 1;
+const uint8_t red_1            = 2;
+const uint8_t red_0            = 3;
+const uint8_t green_1          = 4;
+const uint8_t green_0          = 5;
+const uint8_t blue_1           = 6;
+const uint8_t blue_0           = 7;
 
 // function prototypes //////////////////////////////////////////////////////////////////////////
-void rgb_led(int red, int green, int blue);
+void rgb_led_web_app(uint8_t data);
 void enable_vcc_motors(bool val);
 void enable_vcc_uart(bool val);
 void ble_vcc_enable(bool val);
@@ -151,19 +162,21 @@ int main()
 	//*******************************************************************************************
 	// LED test *********************************************************************************
 
-	rgb_led(1,0,0);
+	rgb_led_web_app(red_1);
 	_delay_ms(1000);
-	rgb_led(0,1,0);
+	rgb_led_web_app(red_0);
+	rgb_led_web_app(green_1);
 	_delay_ms(1000);
-	rgb_led(0,0,1);
+	rgb_led_web_app(green_0);
+	rgb_led_web_app(blue_1);
 	_delay_ms(1000);
-	rgb_led(0,0,0);
+	rgb_led_web_app(blue_0);
 	_delay_ms(1000);
 
 
 	// ******************************************************************************************
 	ble_enable();
-	while(received_int != 1);				// Abwarten bis Verbindung zum BLE-Modul aufgebaut wurde
+	while(received_int != con_successful);				// Abwarten bis Verbindung zum BLE-Modul aufgebaut wurde
 	DDRD |= (1<<DDD5); 						// HIGH = LED on --> Gruene LED kurz anmachen, ohne dass Feedback gegeben wird!
 	_delay_ms(200);
 	DDRD &= ~(1<<DDD5);						// LOW = LED off
@@ -173,16 +186,23 @@ int main()
 
 	while(1)
 	{
-		 if(received_int == 2)
-		 {
-		 	rgb_led(1,0,0);
+		if(interrupt_flag){
+			rgb_led_web_app(received_int);
+			interrupt_flag = false;
 			received_int = 0;
-		 }
-		 if(received_int == 3)
-		 {
-		 	rgb_led(0,0,0);
-			received_int = 0;
-		 }
+		}
+		 
+		 
+		 //if(received_int == 2)
+		 //{
+		 	//rgb_led(1,0,0);
+			//received_int = 0;
+		 //}
+		 //if(received_int == 3)
+		 //{
+		 	//rgb_led(0,0,0);
+			//received_int = 0;
+		 //}
 		 //if(received_int == 1 || received_int == 2){
 			 //while(1){}
 		 //}
@@ -279,43 +299,85 @@ void uart1_string_send_rn (char *data)
 	uart1_char_send(0x0A);	// \n
 }
 
+
+
 //###############################################################################################
 // enable/disable functions #####################################################################
 
-void rgb_led(int red, int green, int blue)
+void rgb_led_web_app(uint8_t data)
 {
-	if (red)
-	{
+	switch (data) {
+		case red_1:
 		DDRD |= (1<<DDD6); 							// HIGH = LED on
-		uart1_int_send(2);
-	}
-	else
-	{		
+		uart1_int_send(red_1);
+		break;
+		
+		case red_0:
 		DDRD &= ~(1<<DDD6);							// LOW = LED off
-		uart1_int_send(3);
-	}
-	
-	if (green)
-	{
+		uart1_int_send(red_0);
+		break;
+
+		case green_1:
 		DDRD |= (1<<DDD5); 							// HIGH = LED on
-		uart1_int_send(4);
-	}
-	else
-	{		
+		uart1_int_send(green_1);
+		break;
+		
+		case green_0:
 		DDRD &= ~(1<<DDD5);							// LOW = LED off
-		uart1_int_send(5);
+		uart1_int_send(green_0);
+		break;
+
+		case blue_1:
+		DDRD |= (1<<DDD4); 							// HIGH = LED on
+		uart1_int_send(blue_1);
+		break;
+		
+		case blue_0:
+		DDRD &= ~(1<<DDD4);							// LOW = LED off
+		uart1_int_send(blue_0);
+		break;
+
+		//weitere Aktoren hier durch neues cases einfach erweitern!
+
+		default:
+		break;
 	}
 	
-	if (blue)
-	{
-		DDRD |= (1<<DDD4); 							// HIGH = LED on
-		uart1_int_send(6);
-	}
-	else
-	{		
-		DDRD &= ~(1<<DDD4);							// LOW = LED off
-		uart1_int_send(7);
-	}
+	
+	
+	
+	// if (red == 1)
+	// {
+	// 	DDRD |= (1<<DDD6); 							// HIGH = LED on
+	// 	uart1_int_send(red_1);
+	// }
+	// else if (red == 0)
+	// {		
+	// 	DDRD &= ~(1<<DDD6);							// LOW = LED off
+	// 	uart1_int_send(red_0);
+	// }
+	
+	// if (green == 1)
+	// {
+	// 	DDRD |= (1<<DDD5); 							// HIGH = LED on
+	// 	uart1_int_send(green_1);
+	// }
+	// else if (green)
+	// {		
+	// 	DDRD &= ~(1<<DDD5);							// LOW = LED off
+	// 	uart1_int_send(green_0);
+	// }
+	
+	// if (blue)
+	// {
+	// 	DDRD |= (1<<DDD4); 							// HIGH = LED on
+	// 	uart1_int_send(blue_1);
+	// }
+	// else
+	// {		
+	// 	DDRD &= ~(1<<DDD4);							// LOW = LED off
+	// 	uart1_int_send(blue_0);
+	// }
 }
 
 
@@ -370,10 +432,11 @@ ISR(USART1_RX_vect){
 	/* Wait for data to be received */
 	while ( !(UCSR1A & (1<<RXC1)) );			// ist wahrscheinlich nicht noetig, weil Interrupt nur mit dieser Bedinung erfolgt
 	
+	interrupt_flag = true;
+
 	/* Get and return received data from buffer */
 	received_int = UDR1;
 }
-
 
 //###############################################################################################
 // End ##########################################################################################
