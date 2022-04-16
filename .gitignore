@@ -1,0 +1,12 @@
+
+# Files for der Microcontroller
+MOSbot_RGB_BLE/MOSbot_RGB_BLE/Debug/
+!MOSbot_RGB_BLE/MOSbot_RGB_BLE/Debug/MOSbot_RGB_BLE.hex
+MOSbot_RGB_BLE/.vs/
+MOSbot_RGB_BLE/MOSbot_RGB_BLE.atsln
+MOSbot_RGB_BLE/MOSbot_RGB_BLE/MOSbot_RGB_BLE.componentinfo.xml
+MOSbot_RGB_BLE/MOSbot_RGB_BLE/MOSbot_RGB_BLE.cppproj
+
+# other files for the web app
+Other_Examples/
+Web_App/playground.js
