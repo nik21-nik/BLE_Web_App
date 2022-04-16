@@ -307,6 +307,20 @@ void uart1_string_send_rn (char *data)
 void rgb_led_web_app(uint8_t data)
 {
 	switch (data) {
+		case con_successful:						// bei Verbindung den akutellen Status des Registers senden
+			if(DDRD & (1<<DDD6)){
+				uart1_int_send(red_1);
+			}
+			_delay_ms(20);
+			if(DDRD & (1<<DDD5)){
+				uart1_int_send(green_1);
+			}
+			_delay_ms(20);
+			if(DDRD & (1<<DDD4)){
+				uart1_int_send(blue_1);
+			}
+		break;
+				
 		case red_1:
 		DDRD |= (1<<DDD6); 							// HIGH = LED on
 		uart1_int_send(red_1);
