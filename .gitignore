@@ -1,7 +1,18 @@
 
 # Files for der Microcontroller
-MOSbot_RGB_BLE/MOSbot_RGB_BLE/Debug/
-!MOSbot_RGB_BLE/MOSbot_RGB_BLE/Debug/MOSbot_RGB_BLE.hex
+MOSbot_RGB_BLE/MOSbot_RGB_BLE/Debug/main.d
+MOSbot_RGB_BLE/MOSbot_RGB_BLE/Debug/main.o
+MOSbot_RGB_BLE/MOSbot_RGB_BLE/Debug/makedep.mk
+MOSbot_RGB_BLE/MOSbot_RGB_BLE/Debug/Makefile
+MOSbot_RGB_BLE/MOSbot_RGB_BLE/Debug/MOSbot_RGB_BLE.eep
+MOSbot_RGB_BLE/MOSbot_RGB_BLE/Debug/MOSbot_RGB_BLE.elf
+MOSbot_RGB_BLE/MOSbot_RGB_BLE/Debug/MOSbot_RGB_BLE.lss
+MOSbot_RGB_BLE/MOSbot_RGB_BLE/Debug/MOSbot_RGB_BLE.map
+MOSbot_RGB_BLE/MOSbot_RGB_BLE/Debug/MOSbot_RGB_BLE.srec
+MOSbot_RGB_BLE/MOSbot_RGB_BLE/Debug/MOSbot_RGB_BLE.eep
+
+
+
 MOSbot_RGB_BLE/.vs/
 MOSbot_RGB_BLE/MOSbot_RGB_BLE.atsln
 MOSbot_RGB_BLE/MOSbot_RGB_BLE/MOSbot_RGB_BLE.componentinfo.xml
