@@ -5,9 +5,7 @@ var deviceName = "MOSbot";
 var bleService = '49535343-fe7d-4ae5-8fa9-9fafd205e455';
 var bleCharacteristic_TX = '49535343-1e4d-4bd9-ba61-23c647249616';
 var bleCharacteristic_RX = '49535343-8841-43f4-a8d4-ecbe34729bb3';
-var global_gattCharacteristic_TX;
-var global_gattCharacteristic_RX;
-var global_service;
+var global_device;
 var RX_Characteristic;
 
 // Protocol /////////////////////////////////////////////////////////////////////////////
@@ -35,7 +33,7 @@ document.getElementById("led-blue-off").hidden = false;
 document.querySelector("#connect").addEventListener("click", async () => {                      // async-Funktion: https://blog.logrocket.com/build-bluetooth-app-chrome-bluetooth-web-api/
     try {
         if (isWebBluetoothEnabled()) {
-            const device = await navigator.bluetooth.requestDevice({ 
+            global_device = await navigator.bluetooth.requestDevice({ 
                 optionalServices: [bleService],
                 // acceptAllDevices: true,      // Option to accept all devices
                 filters: [{ name: deviceName }], 
@@ -43,7 +41,7 @@ document.querySelector("#connect").addEventListener("click", async () => {      
         
             // Connect to the GATT server
             console.log('Connect...');
-            const server = await device.gatt.connect();
+            const server = await global_device.gatt.connect();
         
             // Getting the services we mentioned before through GATT server
             console.log('Getting GATT Service...');
@@ -66,6 +64,9 @@ document.querySelector("#connect").addEventListener("click", async () => {      
             
             RX_Characteristic.writeValue(Uint8Array.of(1));
             console.log('Connection successfull.');
+
+            document.getElementById("connect").disabled = true;
+            document.getElementById("disconnect").disabled = false;
         }
     } 
     catch(err) {
@@ -75,7 +76,10 @@ document.querySelector("#connect").addEventListener("click", async () => {      
 
 document.querySelector("#disconnect").addEventListener("click", function () {
     if (isWebBluetoothEnabled()) {
-        //hier das Gerät disconnecten!
+        global_device.gatt.disconnect();    
+        global_device.addEventListener('gattserverdisconnected', console.log("Disconnected."));
+        document.getElementById("connect").disabled = false;
+        document.getElementById("disconnect").disabled = true;
     }
 });
 
