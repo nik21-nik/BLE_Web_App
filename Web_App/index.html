@@ -4,21 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MOSbots BLE Web App</title>
-    <style>
-      /* hier kommt der CSS Code rein*/
-      body {
-        background-color: black;
-        color: grey;
-        font-size: 25px;
-      }
 
-      .white-mode {
-        background-color: white;
-        color: black;
-      }
-    </style>
   </head>
   <body>
+    <header>
+      <link rel="stylesheet" href="style.css">
+    </header>
     <h1>Switching the RGB-LED at the MOSbot via Web Bluetooth in Chrome</h1>
 
     <button id="connect">Connect</button>
@@ -31,14 +22,33 @@
     <button id="blau_an">Blau an</button>
     <button id="blau_aus">Blau aus</button>
 
-    <p id="output"></p>
-    <button onclick="myFunction()">Toggle dark mode</button>   
+
+    <div class="container">
+      <div class="led-box">
+        <div class="led-red-on" id="led-red-on" hidden></div>
+        <div class="led-red-off" id="led-red-off" hidden></div>
+        <p>Red LED</p>
+      </div>
+      <div class="led-box">
+        <div class="led-green-on" id="led-green-on" hidden></div>
+        <div class="led-green-off" id="led-green-off" hidden></div>
+        <p>Green LED</p>
+      </div>
+      <div class="led-box">
+        <div class="led-blue-on" id="led-blue-on" hidden></div>
+        <div class="led-blue-off" id="led-blue-off" hidden></div>
+        <p>Blue LED</p>
+      </div>
+    </div>
+
+    <button class="toggle" onclick="myFunction()">Toggle dark mode</button>   
     <script>
       function myFunction() {
         var element = document.body;
         element.classList.toggle("white-mode");
       }
     </script>
+    
     <script src="script.js">
     </script>
   </body>

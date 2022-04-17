@@ -21,6 +21,15 @@ const blue_1           = 6;
 const blue_0           = 7;
 
 //###############################################################################################
+// Styling /////////////////////////////////////////////////////////////////////////////
+document.getElementById("led-red-on").hidden = true;
+document.getElementById("led-red-off").hidden = false;
+document.getElementById("led-green-on").hidden = true;
+document.getElementById("led-green-off").hidden = false;
+document.getElementById("led-blue-on").hidden = true;
+document.getElementById("led-blue-off").hidden = false;
+
+//###############################################################################################
 // Event Listeners /////////////////////////////////////////////////////////////////////////////
 
 document.querySelector("#connect").addEventListener("click", async () => {                      // async-Funktion: https://blog.logrocket.com/build-bluetooth-app-chrome-bluetooth-web-api/
@@ -61,7 +70,6 @@ document.querySelector("#connect").addEventListener("click", async () => {      
     } 
     catch(err) {
       console.error(err);
-      //alert("An error occured while connecting");
     }
 });
 
@@ -72,39 +80,39 @@ document.querySelector("#disconnect").addEventListener("click", function () {
 });
 
 document.querySelector('#rot_an').addEventListener('click', function() {
-    // if (isWebBluetoothEnabled()) { 
+    if (isWebBluetoothEnabled()) { 
         func_Rot_an();
-    // }
+    }
 })
 
   document.querySelector('#rot_aus').addEventListener('click', function() {
-    // if (isWebBluetoothEnabled()) { 
+    if (isWebBluetoothEnabled()) { 
         func_Rot_aus();
-    // }
+    }
 })
 
 document.querySelector('#gruen_an').addEventListener('click', function() {
-    // if (isWebBluetoothEnabled()) { 
+    if (isWebBluetoothEnabled()) { 
         func_Gruen_an();
-    // }
+    }
 })
 
   document.querySelector('#gruen_aus').addEventListener('click', function() {
-    // if (isWebBluetoothEnabled()) { 
+    if (isWebBluetoothEnabled()) { 
         func_Gruen_aus();
-    // }
+    }
 })
 
 document.querySelector('#blau_an').addEventListener('click', function() {
-    // if (isWebBluetoothEnabled()) { 
+    if (isWebBluetoothEnabled()) { 
         func_Blau_an();
-    // }
+    }
 })
 
   document.querySelector('#blau_aus').addEventListener('click', function() {
-    // if (isWebBluetoothEnabled()) { 
+    if (isWebBluetoothEnabled()) { 
         func_Blau_aus();
-    // }
+    }
 })
 
 
@@ -123,46 +131,46 @@ function isWebBluetoothEnabled() {
 
 function handleNotifications(event) {
     let value = event.target.value.getUint8(0);
-    // if(value == red_1){
-    //     document.getElementById("output").innerHTML = "Rot An";
-    // }
-    // if(value == red_0){
-    //     document.getElementById("output").innerHTML = "Rot Aus";
-    // }
 
     switch (value) {
         case red_1:
-            document.getElementById("output").innerHTML = "Rot An";
+            document.getElementById("led-red-on").hidden = false;
+            document.getElementById("led-red-off").hidden = true;
             break;
         
         case red_0:
-            document.getElementById("output").innerHTML = "Rot Aus";
+            document.getElementById("led-red-on").hidden = true;
+            document.getElementById("led-red-off").hidden = false;
             break;
 
         case green_1:
-            document.getElementById("output").innerHTML = "Grün An";
+            document.getElementById("led-green-on").hidden = false;
+            document.getElementById("led-green-off").hidden = true;
             break;
         
         case green_0:
-            document.getElementById("output").innerHTML = "Grün Aus";
+            document.getElementById("led-green-on").hidden = true;
+            document.getElementById("led-green-off").hidden = false;
             break;
 
         case blue_1:
-            document.getElementById("output").innerHTML = "Blau An";
+            document.getElementById("led-blue-on").hidden = false;
+            document.getElementById("led-blue-off").hidden = true;
             break;
         
         case blue_0:
-            document.getElementById("output").innerHTML = "Blau Aus";
+            document.getElementById("led-blue-on").hidden = true;
+            document.getElementById("led-blue-off").hidden = false;
             break;
 
         default:
-            document.getElementById("output").innerHTML = "Unknown data";
+            console.log("Data does not match protocol!")
             break;
     }
 
     
     var now = new Date();
-    console.log('> ' + now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds() + ' Data: ' + value);
+    console.log('> ' + now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds() + ' Received data: ' + value);
 }
 
 
