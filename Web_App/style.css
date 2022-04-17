@@ -21,6 +21,7 @@ body {
 /* Link to Github ################################*/
 .link {
   top:95%;
+  left: 1%;
   font-size: 15px;
   background-color: white;
   position: absolute;
@@ -30,14 +31,19 @@ body {
 
 .container {
 	background-size: cover;
-  padding: 50px;
 }
 
 .led-box {
   height: 30px;
   width: 100px;
-  margin: 10px 0;
+  text-align: center;
   float: left;
+}
+
+.led-box button {
+  font-size: 15px;
+  text-align: center;
+  margin: 1em;
 }
 
 .led-box p {

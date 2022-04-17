@@ -18,6 +18,10 @@ const green_0          = 5;
 const blue_1           = 6;
 const blue_0           = 7;
 
+var red_on = false;
+var green_on = false;
+var blue_on = false;
+
 //###############################################################################################
 // Styling /////////////////////////////////////////////////////////////////////////////
 document.getElementById("led-red-on").hidden = true;
@@ -75,47 +79,36 @@ document.querySelector("#connect").addEventListener("click", async () => {      
 });
 
 document.querySelector("#disconnect").addEventListener("click", function () {
-    if (isWebBluetoothEnabled()) {
-        global_device.gatt.disconnect();    
-        global_device.addEventListener('gattserverdisconnected', console.log("Disconnected."));
-        document.getElementById("connect").disabled = false;
-        document.getElementById("disconnect").disabled = true;
-    }
+    global_device.gatt.disconnect();    
+    global_device.addEventListener('gattserverdisconnected', console.log("Disconnected."));
+    document.getElementById("connect").disabled = false;
+    document.getElementById("disconnect").disabled = true;
 });
 
-document.querySelector('#rot_an').addEventListener('click', function() {
-    if (isWebBluetoothEnabled()) { 
-        func_Rot_an();
-    }
+// switch LEDs /////////////////////////////////////////////////////////////////////////////
+
+document.querySelector('#rot').addEventListener('click', function() {
+    red_on ? func_Rot_aus() : func_Rot_an()
 })
 
-  document.querySelector('#rot_aus').addEventListener('click', function() {
-    if (isWebBluetoothEnabled()) { 
-        func_Rot_aus();
-    }
+document.querySelector('#gruen').addEventListener('click', function() {
+    green_on ? func_Gruen_aus() : func_Gruen_an();
 })
 
-document.querySelector('#gruen_an').addEventListener('click', function() {
-    if (isWebBluetoothEnabled()) { 
-        func_Gruen_an();
-    }
+document.querySelector('#blau').addEventListener('click', function() {
+    blue_on ? func_Blau_aus() : func_Blau_an();
 })
 
-  document.querySelector('#gruen_aus').addEventListener('click', function() {
-    if (isWebBluetoothEnabled()) { 
-        func_Gruen_aus();
-    }
-})
 
-document.querySelector('#blau_an').addEventListener('click', function() {
-    if (isWebBluetoothEnabled()) { 
-        func_Blau_an();
+document.addEventListener("keydown", function(event) {
+    if (event.code == "Digit1") {                                  // https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/code/code_values
+        red_on ? func_Rot_aus() : func_Rot_an();
     }
-})
-
-  document.querySelector('#blau_aus').addEventListener('click', function() {
-    if (isWebBluetoothEnabled()) { 
-        func_Blau_aus();
+    if (event.code == "Digit2") {
+        green_on ? func_Gruen_aus() : func_Gruen_an();
+    }
+    if (event.code == "Digit3") {
+        blue_on ? func_Blau_aus() : func_Blau_an();
     }
 })
 
@@ -138,31 +131,37 @@ function handleNotifications(event) {
 
     switch (value) {
         case red_1:
+            red_on = true;
             document.getElementById("led-red-on").hidden = false;
             document.getElementById("led-red-off").hidden = true;
             break;
         
         case red_0:
+            red_on = false;
             document.getElementById("led-red-on").hidden = true;
             document.getElementById("led-red-off").hidden = false;
             break;
 
         case green_1:
+            green_on = true;
             document.getElementById("led-green-on").hidden = false;
             document.getElementById("led-green-off").hidden = true;
             break;
         
         case green_0:
+            green_on = false;
             document.getElementById("led-green-on").hidden = true;
             document.getElementById("led-green-off").hidden = false;
             break;
 
         case blue_1:
+            blue_on = true;
             document.getElementById("led-blue-on").hidden = false;
             document.getElementById("led-blue-off").hidden = true;
             break;
         
         case blue_0:
+            blue_on = false;
             document.getElementById("led-blue-on").hidden = true;
             document.getElementById("led-blue-off").hidden = false;
             break;
