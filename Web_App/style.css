@@ -18,6 +18,14 @@ body {
   position: absolute;
 }
 
+/* Link to Github ################################*/
+.link {
+  top:95%;
+  font-size: 15px;
+  background-color: white;
+  position: absolute;
+}
+
 /* LEDS ################################*/
 
 .container {
