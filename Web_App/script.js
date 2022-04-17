@@ -67,10 +67,7 @@ document.querySelector("#connect").addEventListener("click", async () => {      
             RX_Characteristic = await MOSbot_service.getCharacteristic(bleCharacteristic_RX);
             
             RX_Characteristic.writeValue(Uint8Array.of(1));
-            console.log('Connection successfull.');
 
-            document.getElementById("connect").disabled = true;
-            document.getElementById("disconnect").disabled = false;
         }
     } 
     catch(err) {
@@ -130,6 +127,12 @@ function handleNotifications(event) {
     let value = event.target.value.getUint8(0);
 
     switch (value) {
+        case con_successful:
+            console.log('Connection successfull.');
+            document.getElementById("connect").disabled = true;
+            document.getElementById("disconnect").disabled = false;
+            break;
+        
         case red_1:
             red_on = true;
             document.getElementById("led-red-on").hidden = false;
@@ -171,7 +174,6 @@ function handleNotifications(event) {
             break;
     }
 
-    
     var now = new Date();
     console.log('> ' + now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds() + ' Received data: ' + value);
 }

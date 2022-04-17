@@ -319,6 +319,8 @@ void rgb_led_web_app(uint8_t data)
 			if(DDRD & (1<<DDD4)){
 				uart1_int_send(blue_1);
 			}
+			_delay_ms(20);
+			uart1_int_send(con_successful);
 		break;
 				
 		case red_1:
