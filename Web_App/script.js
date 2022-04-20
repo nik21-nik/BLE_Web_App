@@ -122,14 +122,26 @@ document.addEventListener("keydown", function(event) {
     if (event.code == "Digit3") {
         blue_on ? writeData(blue_0) : writeData(blue_1);
     }
-    if (event.code == "KeyD") {
-        Motor_links_on ? writeData(Motor_links_0) : writeData(Motor_links_1);
+    if (event.code == "KeyD" && !Motor_links_on) {
+        writeData(Motor_links_1);
+        Motor_links_on = true;
     }
-    if (event.code == "KeyA") {
-        Motor_rechts_on ? writeData(Motor_rechts_0) : writeData(Motor_rechts_1);
+    if (event.code == "KeyA" && !Motor_rechts_on) {
+        writeData(Motor_rechts_1);
+        Motor_rechts_on = true;
     }
 })
 
+document.addEventListener("keyup", function(event) {            // Beim Loslassen der Tasten soll der Motor ausgehen
+    if (event.code == "KeyD") {
+        writeData(Motor_links_0);
+        Motor_links_on = false;
+    }
+    if (event.code == "KeyA") {
+        writeData(Motor_rechts_0);
+        Motor_rechts_on = false;
+    }
+})
 
 //###############################################################################################
 // Functions /////////////////////////////////////////////////////////////////////////////
