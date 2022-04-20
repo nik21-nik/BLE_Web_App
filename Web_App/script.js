@@ -103,6 +103,14 @@ document.querySelector('#blau').addEventListener('click', function() {
     blue_on ? func_Blau_aus() : func_Blau_an();
 })
 
+document.querySelector('#motor_l').addEventListener('click', function() {
+    Motor_links_on ? func_Motor_links_aus() : func_Motor_links_an();
+})
+
+document.querySelector('#motor_r').addEventListener('click', function() {
+    Motor_rechts_on ? func_Motor_rechts_aus() : func_Motor_rechts_an();
+})
+
 
 document.addEventListener("keydown", function(event) {
     if (event.code == "Digit1") {                                  // https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/code/code_values
