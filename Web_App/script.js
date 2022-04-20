@@ -92,41 +92,41 @@ document.querySelector("#disconnect").addEventListener("click", function () {
 // switch LEDs /////////////////////////////////////////////////////////////////////////////
 
 document.querySelector('#rot').addEventListener('click', function() {
-    red_on ? func_Rot_aus() : func_Rot_an()
+    red_on ? writeData(red_0) : writeData(red_1)
 })
 
 document.querySelector('#gruen').addEventListener('click', function() {
-    green_on ? func_Gruen_aus() : func_Gruen_an();
+    green_on ? writeData(green_0) : writeData(green_1);
 })
 
 document.querySelector('#blau').addEventListener('click', function() {
-    blue_on ? func_Blau_aus() : func_Blau_an();
+    blue_on ? writeData(blue_0) : writeData(blue_1);
 })
 
 document.querySelector('#motor_l').addEventListener('click', function() {
-    Motor_links_on ? func_Motor_links_aus() : func_Motor_links_an();
+    Motor_links_on ? writeData(Motor_links_0) : writeData(Motor_links_1);
 })
 
 document.querySelector('#motor_r').addEventListener('click', function() {
-    Motor_rechts_on ? func_Motor_rechts_aus() : func_Motor_rechts_an();
+    Motor_rechts_on ? writeData(Motor_rechts_0) : writeData(Motor_rechts_1);
 })
 
 
 document.addEventListener("keydown", function(event) {
     if (event.code == "Digit1") {                                  // https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/code/code_values
-        red_on ? func_Rot_aus() : func_Rot_an();
+        red_on ? writeData(red_0) : writeData(red_1);
     }
     if (event.code == "Digit2") {
-        green_on ? func_Gruen_aus() : func_Gruen_an();
+        green_on ? writeData(green_0) : writeData(green_1);
     }
     if (event.code == "Digit3") {
-        blue_on ? func_Blau_aus() : func_Blau_an();
+        blue_on ? writeData(blue_0) : writeData(blue_1);
     }
     if (event.code == "KeyD") {
-        Motor_links_on ? func_Motor_links_aus() : func_Motor_links_an();
+        Motor_links_on ? writeData(Motor_links_0) : writeData(Motor_links_1);
     }
     if (event.code == "KeyA") {
-        Motor_rechts_on ? func_Motor_rechts_aus() : func_Motor_rechts_an();
+        Motor_rechts_on ? writeData(Motor_rechts_0) : writeData(Motor_rechts_1);
     }
 })
 
@@ -216,43 +216,6 @@ function handleNotifications(event) {
 }
 
 
-
-function func_Rot_an(){
-    RX_Characteristic.writeValue(Uint8Array.of(red_1));
-}
-
-function func_Rot_aus(){
-    RX_Characteristic.writeValue(Uint8Array.of(red_0));
-}
-
-function func_Gruen_an(){
-    RX_Characteristic.writeValue(Uint8Array.of(green_1));
-}
-
-function func_Gruen_aus(){
-    RX_Characteristic.writeValue(Uint8Array.of(green_0));
-}
-
-function func_Blau_an(){
-    RX_Characteristic.writeValue(Uint8Array.of(blue_1));
-}
-
-function func_Blau_aus(){
-    RX_Characteristic.writeValue(Uint8Array.of(blue_0));
-}
-
-function func_Motor_links_an(){
-    RX_Characteristic.writeValue(Uint8Array.of(Motor_links_1));
-}
-
-function func_Motor_links_aus(){
-    RX_Characteristic.writeValue(Uint8Array.of(Motor_links_0));
-}
-
-function func_Motor_rechts_an(){
-    RX_Characteristic.writeValue(Uint8Array.of(Motor_rechts_1));
-}
-
-function func_Motor_rechts_aus(){
-    RX_Characteristic.writeValue(Uint8Array.of(Motor_rechts_0));
+function writeData(data){
+    RX_Characteristic.writeValue(Uint8Array.of(data));
 }
