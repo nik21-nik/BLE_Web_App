@@ -17,10 +17,17 @@ const green_1          = 4;
 const green_0          = 5;
 const blue_1           = 6;
 const blue_0           = 7;
+const Motor_links_1    = 10;
+const Motor_links_0    = 11;
+const Motor_rechts_1   = 12;
+const Motor_rechts_0   = 13;
 
-var red_on = false;
-var green_on = false;
-var blue_on = false;
+// Feedback
+var red_on              = false;
+var green_on            = false;
+var blue_on             = false;
+var Motor_links_on      = false;
+var Motor_rechts_on     = false;
 
 //###############################################################################################
 // Styling /////////////////////////////////////////////////////////////////////////////
@@ -66,7 +73,7 @@ document.querySelector("#connect").addEventListener("click", async () => {      
             console.log('Getting GATT Characteristic RX...');
             RX_Characteristic = await MOSbot_service.getCharacteristic(bleCharacteristic_RX);
             
-            RX_Characteristic.writeValue(Uint8Array.of(1));
+            RX_Characteristic.writeValue(Uint8Array.of(con_successful));
 
         }
     } 
@@ -107,6 +114,12 @@ document.addEventListener("keydown", function(event) {
     if (event.code == "Digit3") {
         blue_on ? func_Blau_aus() : func_Blau_an();
     }
+    if (event.code == "KeyD") {
+        Motor_links_on ? func_Motor_links_aus() : func_Motor_links_an();
+    }
+    if (event.code == "KeyA") {
+        Motor_rechts_on ? func_Motor_rechts_aus() : func_Motor_rechts_an();
+    }
 })
 
 
@@ -131,47 +144,63 @@ function handleNotifications(event) {
             console.log('Connection successfull.');
             document.getElementById("connect").disabled = true;
             document.getElementById("disconnect").disabled = false;
-            break;
+        break;
         
         case red_1:
             red_on = true;
             document.getElementById("led-red-on").hidden = false;
             document.getElementById("led-red-off").hidden = true;
-            break;
+        break;
         
         case red_0:
             red_on = false;
             document.getElementById("led-red-on").hidden = true;
             document.getElementById("led-red-off").hidden = false;
-            break;
+        break;
 
         case green_1:
             green_on = true;
             document.getElementById("led-green-on").hidden = false;
             document.getElementById("led-green-off").hidden = true;
-            break;
+        break;
         
         case green_0:
             green_on = false;
             document.getElementById("led-green-on").hidden = true;
             document.getElementById("led-green-off").hidden = false;
-            break;
+        break;
 
         case blue_1:
             blue_on = true;
             document.getElementById("led-blue-on").hidden = false;
             document.getElementById("led-blue-off").hidden = true;
-            break;
+        break;
         
         case blue_0:
             blue_on = false;
             document.getElementById("led-blue-on").hidden = true;
             document.getElementById("led-blue-off").hidden = false;
-            break;
+        break;
+
+        case Motor_links_1:
+            Motor_links_on = true;
+        break;
+
+        case Motor_links_0:
+            Motor_links_on = false;
+        break;
+
+        case Motor_rechts_1:
+            Motor_rechts_on = true;
+        break;
+
+        case Motor_rechts_0:
+            Motor_rechts_on = false;
+        break;
 
         default:
             console.log("Data does not match protocol!")
-            break;
+        break;
     }
 
     var now = new Date();
@@ -202,4 +231,20 @@ function func_Blau_an(){
 
 function func_Blau_aus(){
     RX_Characteristic.writeValue(Uint8Array.of(blue_0));
+}
+
+function func_Motor_links_an(){
+    RX_Characteristic.writeValue(Uint8Array.of(Motor_links_1));
+}
+
+function func_Motor_links_aus(){
+    RX_Characteristic.writeValue(Uint8Array.of(Motor_links_0));
+}
+
+function func_Motor_rechts_an(){
+    RX_Characteristic.writeValue(Uint8Array.of(Motor_rechts_1));
+}
+
+function func_Motor_rechts_aus(){
+    RX_Characteristic.writeValue(Uint8Array.of(Motor_rechts_0));
 }

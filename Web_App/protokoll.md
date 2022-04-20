@@ -11,3 +11,9 @@
 |5               |5                   |Grün ausgeschaltet               |
 |6               |6                   |Blau eingeschaltet               |
 |7               |7                   |Blau ausgeschaltet               |
+|8               |8                   |-- nicht belegt                  |
+|9               |9                   |-- nicht belegt                  |
+|10              |10                  |Motor links ein                  |
+|11              |11                  |Motor links aus                  |
+|12              |12                  |Motor rechts ein                 |
+|14              |13                  |Motor rechts aus                 |

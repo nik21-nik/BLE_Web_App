@@ -26,7 +26,7 @@
 	PD7 - USER button					1 pressed	0 not pressed	input
 */
 
-//###############################################################################################
+//###############################################################################################12
 // initialization ###############################################################################
 //###############################################################################################
 
@@ -77,6 +77,10 @@ const uint8_t green_1          = 4;
 const uint8_t green_0          = 5;
 const uint8_t blue_1           = 6;
 const uint8_t blue_0           = 7;
+const uint8_t Motor_links_1    = 10;
+const uint8_t Motor_links_0    = 11;
+const uint8_t Motor_rechts_1   = 12;
+const uint8_t Motor_rechts_0   = 13;
 
 // function prototypes //////////////////////////////////////////////////////////////////////////
 void rgb_led_web_app(uint8_t data);
@@ -324,33 +328,55 @@ void rgb_led_web_app(uint8_t data)
 		break;
 				
 		case red_1:
-		DDRD |= (1<<DDD6); 							// HIGH = LED on
-		uart1_int_send(red_1);
+			DDRD |= (1<<DDD6); 							// HIGH = LED on
+			uart1_int_send(red_1);
 		break;
 		
 		case red_0:
-		DDRD &= ~(1<<DDD6);							// LOW = LED off
-		uart1_int_send(red_0);
+			DDRD &= ~(1<<DDD6);							// LOW = LED off
+			uart1_int_send(red_0);
 		break;
 
 		case green_1:
-		DDRD |= (1<<DDD5); 							// HIGH = LED on
-		uart1_int_send(green_1);
+			DDRD |= (1<<DDD5); 							// HIGH = LED on
+			uart1_int_send(green_1);
 		break;
 		
 		case green_0:
-		DDRD &= ~(1<<DDD5);							// LOW = LED off
-		uart1_int_send(green_0);
+			DDRD &= ~(1<<DDD5);							// LOW = LED off
+			uart1_int_send(green_0);
 		break;
 
 		case blue_1:
-		DDRD |= (1<<DDD4); 							// HIGH = LED on
-		uart1_int_send(blue_1);
+			DDRD |= (1<<DDD4); 							// HIGH = LED on
+			uart1_int_send(blue_1);
 		break;
 		
 		case blue_0:
-		DDRD &= ~(1<<DDD4);							// LOW = LED off
-		uart1_int_send(blue_0);
+			DDRD &= ~(1<<DDD4);							// LOW = LED off
+			uart1_int_send(blue_0);
+		break;
+
+		case Motor_links_1:
+			PORTC |= (1<<PORTC6);
+			PORTB |= (1<<PORTB3);
+			uart1_int_send(Motor_links_1);
+		break;
+
+		case Motor_links_0:
+			PORTB &= ~(1<<PORTB3);
+			uart1_int_send(Motor_links_0);
+		break;
+
+		case Motor_rechts_1:
+			PORTC |= (1<<PORTC6);
+			PORTB |= (1<<PORTB4);
+			uart1_int_send(Motor_rechts_1);
+		break;
+
+		case Motor_rechts_0:
+			PORTB &= ~(1<<PORTB4);
+			uart1_int_send(Motor_rechts_0);
 		break;
 
 		//weitere Aktoren hier durch neues cases einfach erweitern!
@@ -358,42 +384,6 @@ void rgb_led_web_app(uint8_t data)
 		default:
 		break;
 	}
-	
-	
-	
-	
-	// if (red == 1)
-	// {
-	// 	DDRD |= (1<<DDD6); 							// HIGH = LED on
-	// 	uart1_int_send(red_1);
-	// }
-	// else if (red == 0)
-	// {		
-	// 	DDRD &= ~(1<<DDD6);							// LOW = LED off
-	// 	uart1_int_send(red_0);
-	// }
-	
-	// if (green == 1)
-	// {
-	// 	DDRD |= (1<<DDD5); 							// HIGH = LED on
-	// 	uart1_int_send(green_1);
-	// }
-	// else if (green)
-	// {		
-	// 	DDRD &= ~(1<<DDD5);							// LOW = LED off
-	// 	uart1_int_send(green_0);
-	// }
-	
-	// if (blue)
-	// {
-	// 	DDRD |= (1<<DDD4); 							// HIGH = LED on
-	// 	uart1_int_send(blue_1);
-	// }
-	// else
-	// {		
-	// 	DDRD &= ~(1<<DDD4);							// LOW = LED off
-	// 	uart1_int_send(blue_0);
-	// }
 }
 
 
