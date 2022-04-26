@@ -32,12 +32,9 @@ Nice to have:
 - Link to Github
 - Change background theme of web app 
 
----
-
-# Knowledge collection
-
-
-
+<br>
+<br>
+<br>
 
 ---
 
