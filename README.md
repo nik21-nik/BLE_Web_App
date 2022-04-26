@@ -3,30 +3,27 @@
 Studienarbeit von Niklas Stöcklein, MT19A,
 Betreuer: Alexander Wilke
 
-## How to use the WEB-App
+## How to use the Web-App
 
-At first, check if the browser is compatible with the Web Bluetooth API on this [website](https://developer.mozilla.org/en-US/docs/Web/API/Web_Bluetooth_API).
+1. Check if your browser is compatible with the Web Bluetooth API on this [website](https://developer.mozilla.org/en-US/docs/Web/API/Web_Bluetooth_API).
+2. Download [main.cpp](https://github.com/nik21-nik/BLE_Web_App/blob/main/MOSbot_RGB_BLE/MOSbot_RGB_BLE/main.cpp) and program the MOSbot via ISP
+3. Set up the Web-App on your device:
+    - Option 1: for all devices
+        Visit https://blewebapp.000webhostapp.com/ (this may not be up to date with the files in this repo)
+    - Option 2: for PC
+        Download [index.html](https://github.com/nik21-nik/BLE_Web_App/blob/main/Web_App/index.html), [script.js](https://github.com/nik21-nik/BLE_Web_App/blob/main/Web_App/script.js) and [style.css](https://github.com/nik21-nik/BLE_Web_App/blob/main/Web_App/style.css) into the same dirctory and open index.html with a compatible browser (e.g. Chrome)
+    - Option 3: for Android smartphone
+        via SD-card: to be done
+4. Connect to MOSbot
+5. Interact with MOSbot
 
-### Option 1: via website
-1. Visit https://blewebapp.000webhostapp.com/ (this may not be up to date with the repo)
-2. Connect to MOSbot
-3. Interact with MOSbot
-
-### Option 2: by downloading files on your pc
-1. Download [index.html](https://github.com/nik21-nik/BLE_Web_App/blob/main/Web_App/index.html), [script.js](https://github.com/nik21-nik/BLE_Web_App/blob/main/Web_App/script.js) and [style.css](https://github.com/nik21-nik/BLE_Web_App/blob/main/Web_App/style.css) into the same dirctory
-2. Open index.html with Chrome
-3. Connect to MOSbot
-4. Interact with MOSbot
-
-### Option 3: by downloading files on sd card for smartphone
-1. to be done
 
 ## Features
 - Connect and disconnect to/from BLE module from MOSbot
 - Get current LED-status immediately after connection
-- Switch LEDs via button or pressing keys (1,2,3)
+- Switch LEDs by pressing buttons or keys (1,2,3)
 - Get Feedback of current LED-status
-- Switch the two motors by pressing keys (A,D)
+- Switch the two motors by pressing buttons or keys (A,D)
 
 Nice to have:
 - Link to Github
