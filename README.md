@@ -3,23 +3,38 @@
 Studienarbeit von Niklas Stöcklein, MT19A,
 Betreuer: Alexander Wilke
 
-## How to
+## How to use the WEB-App
+
+At first, check if the browser is compatible with the Web Bluetooth API on this [website](https://developer.mozilla.org/en-US/docs/Web/API/Web_Bluetooth_API).
+
+### via website
+1. Visit https://blewebapp.000webhostapp.com/ (this may not be up to date with the repo)
+2. Connect to MOSbot
+3. Interact with MOSbot
+
+### by downloading files on your pc
 1. Download [index.html](https://github.com/nik21-nik/BLE_Web_App/blob/main/Web_App/index.html), [script.js](https://github.com/nik21-nik/BLE_Web_App/blob/main/Web_App/script.js) and [style.css](https://github.com/nik21-nik/BLE_Web_App/blob/main/Web_App/style.css) into the same dirctory
 2. Open index.html with Chrome
 3. Connect to MOSbot
 4. Interact with MOSbot
 
+### by downloading files on sd card for smartphone
+1. to be done
+
 ## Features
 - Connect and disconnect to/from BLE module from MOSbot
 - Get current LED-status immediately after connection
-- Switch LEDs via button or pressing keys
+- Switch LEDs via button or pressing keys (1,2,3)
 - Get Feedback of current LED-status
-- Switch the two motors by pressing keys
+- Switch the two motors by pressing keys (A,D)
 
 Nice to have:
 - Link to Github
 - Change background theme of web app 
 
+---
+
+# Knowledge collection
 
 ## Links aus Beschreibung der Studienarbeit
 

@@ -3,20 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MOSbots BLE Web App</title>
+    <link rel="stylesheet" href="style.css">
 
+    <title>MOSbots BLE Web App</title>
   </head>
   <body>
-    <header>
-      <link rel="stylesheet" href="style.css">
-    </header>
     <h1>Switching the RGB-LED at the MOSbot via Web Bluetooth in Chrome</h1>
 
+    <!-- Connect and disconnect buttons -->
     <button id="connect">Connect</button>
     <button id="disconnect" disabled>Disconnect</button>
     <p></p>
 
-
+    <!-- Visualization of LEDs with buttons -->
     <div class="container">
       <div class="led-box">
         <button id="rot">Toggle</button>
@@ -46,16 +45,10 @@
       </div>
     </div>
 
+    <!-- Some other stuff -->
     <a class="link" href="https://github.com/nik21-nik/BLE_Web_App" target="_blank">Github Repository</a>
     <button class="toggle" onclick="myFunction()">Toggle dark mode</button>   
-    <script>
-      function myFunction() {
-        var element = document.body;
-        element.classList.toggle("white-mode");
-      }
-    </script>
     
-    <script src="script.js">
-    </script>
+    <script src="script.js"></script>
   </body>
 </html>

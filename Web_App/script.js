@@ -38,8 +38,16 @@ document.getElementById("led-green-off").hidden = false;
 document.getElementById("led-blue-on").hidden = true;
 document.getElementById("led-blue-off").hidden = false;
 
+// Toggle between dark and white mode
+function myFunction() {
+    var element = document.body;
+    element.classList.toggle("white-mode");
+  }
+
 //###############################################################################################
 // Event Listeners /////////////////////////////////////////////////////////////////////////////
+
+// Connect / Disconnect /////////////////////////////////////////////////////////////////////////////
 
 document.querySelector("#connect").addEventListener("click", async () => {                      // async-Funktion: https://blog.logrocket.com/build-bluetooth-app-chrome-bluetooth-web-api/
     try {
@@ -91,6 +99,8 @@ document.querySelector("#disconnect").addEventListener("click", function () {
 
 // switch LEDs /////////////////////////////////////////////////////////////////////////////
 
+//# with buttons
+
 document.querySelector('#rot').addEventListener('click', function() {
     red_on ? writeData(red_0) : writeData(red_1)
 })
@@ -111,6 +121,7 @@ document.querySelector('#motor_r').addEventListener('click', function() {
     Motor_rechts_on ? writeData(Motor_rechts_0) : writeData(Motor_rechts_1);
 })
 
+//# with keyboard
 
 document.addEventListener("keydown", function(event) {
     if (event.code == "Digit1") {                                  // https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/code/code_values
@@ -149,9 +160,9 @@ document.addEventListener("keyup", function(event) {            // Beim Loslasse
 function isWebBluetoothEnabled() {
     if (!navigator.bluetooth) {
         console.log("Web Bluetooth API is not available in this browser!");
+        alert("Web Bluetooth API is not available in this browser!");
         return false;
     }
-
     return true;
 }
 
