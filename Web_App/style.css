@@ -2,7 +2,7 @@
 body {
   background-color: black;
   color: rgb(199, 199, 199);
-  font-size: 25px;
+  font-size: 12px;
 }
 
 .white-mode {
@@ -11,16 +11,16 @@ body {
 }
 
 .toggle {
-  top:90%;
-  left:90%;
-  width:100px;
-  height:40px;
-  position: absolute;
+  position: fixed;
+  bottom: 10%;
+  right: 1%;
+  width: 100px;
+  height: 40px;
 }
 
 /* Link to Github ################################*/
 .link {
-  top:95%;
+  bottom: 10%;
   left: 1%;
   font-size: 15px;
   background-color: white;
@@ -34,10 +34,11 @@ body {
 }
 
 .led-box {
-  height: 30px;
-  width: 150px;
+  display: flex;
   text-align: center;
   float: left;
+  align-items: center;
+  justify-content: center;
 }
 
 .led-box button {
