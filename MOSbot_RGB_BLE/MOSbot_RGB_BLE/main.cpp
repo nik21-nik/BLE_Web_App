@@ -66,17 +66,16 @@ char COMMAND_SUCCESS[4] 			= "AOK";
 char COMMAND_ERROR[4] 				= "ERR";
 
 // Variables for communication
-volatile uint8_t received_int = 0;
+volatile uint8_t received_int;
 volatile bool interrupt_flag = false;
 
-const uint8_t default_value    = 0;
-const uint8_t con_successful   = 1;
-const uint8_t red_1            = 2;
-const uint8_t red_0            = 3;
-const uint8_t green_1          = 4;
-const uint8_t green_0          = 5;
-const uint8_t blue_1           = 6;
-const uint8_t blue_0           = 7;
+const uint8_t con_successful   = 0;
+const uint8_t red_1            = 1;
+const uint8_t red_0            = 2;
+const uint8_t green_1          = 3;
+const uint8_t green_0          = 4;
+const uint8_t blue_1           = 5;
+const uint8_t blue_0           = 6;
 const uint8_t Motor_links_1    = 10;
 const uint8_t Motor_links_0    = 11;
 const uint8_t Motor_rechts_1   = 12;
@@ -193,7 +192,6 @@ int main()
 		if(interrupt_flag){
 			rgb_led_web_app(received_int);
 			interrupt_flag = false;
-			received_int = 0;
 		}
 		 
 		 
@@ -432,6 +430,10 @@ void ble_reset()
 	_delay_ms(20);
 	ble_hardware_reset(false);
 }
+
+
+//###############################################################################################
+// ISRs #########################################################################
 
 
 ISR(USART1_RX_vect){

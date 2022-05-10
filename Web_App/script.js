@@ -10,13 +10,13 @@ var RX_Characteristic;
 
 // Protocol /////////////////////////////////////////////////////////////////////////////
 
-const con_successful   = 1;
-const red_1            = 2;
-const red_0            = 3;
-const green_1          = 4;
-const green_0          = 5;
-const blue_1           = 6;
-const blue_0           = 7;
+const con_successful   = 0;
+const red_1            = 1;
+const red_0            = 2;
+const green_1          = 3;
+const green_0          = 4;
+const blue_1           = 5;
+const blue_0           = 6;
 const Motor_links_1    = 10;
 const Motor_links_0    = 11;
 const Motor_rechts_1   = 12;
