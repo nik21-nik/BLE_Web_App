@@ -81,7 +81,7 @@ document.querySelector("#connect").addEventListener("click", async () => {      
             console.log('Getting GATT Characteristic RX...');
             RX_Characteristic = await MOSbot_service.getCharacteristic(bleCharacteristic_RX);
             
-            RX_Characteristic.writeValue(Uint8Array.of(con_successful));
+            writeData(con_successful);
 
         }
     } 
