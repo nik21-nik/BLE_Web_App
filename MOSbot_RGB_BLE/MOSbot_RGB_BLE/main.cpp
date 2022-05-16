@@ -154,7 +154,7 @@ int main()
 	// PORTD IO direction
 	DDRD = 0x00;							// set to input
 											//				 for USER button PD7
-	PORTD &= ~( (1<<PD4) | (1<<PD5) | (1<<PD5));// 			 for RGB LED
+	PORTD &= ~( (1<<PD4) | (1<<PD5) | (1<<PD6));// 			 for RGB LED
 	
 	
 	sei();
@@ -163,7 +163,7 @@ int main()
 
 
 	//*******************************************************************************************
-	// LED test *********************************************************************************
+	// LED test without bluetooth connection *********************************************************************************
 
 	rgb_led_web_app(red_1);
 	_delay_ms(1000);
@@ -179,13 +179,6 @@ int main()
 
 	// ******************************************************************************************
 	ble_enable();
-	while(received_int != con_successful);				// Abwarten bis Verbindung zum BLE-Modul aufgebaut wurde
-	DDRD |= (1<<DDD5); 						// HIGH = LED on --> Gruene LED kurz anmachen, ohne dass Feedback gegeben wird!
-	_delay_ms(200);
-	DDRD &= ~(1<<DDD5);						// LOW = LED off
-
-
-
 
 	while(1)
 	{
@@ -193,28 +186,6 @@ int main()
 			rgb_led_web_app(received_int);
 			interrupt_flag = false;
 		}
-		 
-		 
-		 //if(received_int == 2)
-		 //{
-		 	//rgb_led(1,0,0);
-			//received_int = 0;
-		 //}
-		 //if(received_int == 3)
-		 //{
-		 	//rgb_led(0,0,0);
-			//received_int = 0;
-		 //}
-		 //if(received_int == 1 || received_int == 2){
-			 //while(1){}
-		 //}
-		
-		//rgb_led(1,0,0);
-		//_delay_ms(1000);
-		//// rgb_led(0,1,0);
-		//// _delay_ms(2000);
-		//rgb_led(0,0,0);
-		//_delay_ms(3000);
 
 	} // end while(1)
 
@@ -237,8 +208,6 @@ void uart1_int_send (uint8_t data)
 		// wait until sending is possible
 	}
 	UDR1 = data;
-	//uart1_char_send(0x0D);	// \r
-	//uart1_char_send(0x0A);	// \n
 }
 
 
@@ -438,12 +407,12 @@ void ble_reset()
 
 ISR(USART1_RX_vect){
 	/* Wait for data to be received */
-	while ( !(UCSR1A & (1<<RXC1)) );			// ist wahrscheinlich nicht noetig, weil Interrupt nur mit dieser Bedinung erfolgt
+	while ( !(UCSR1A & (1<<RXC1)) );
 	
-	interrupt_flag = true;
-
 	/* Get and return received data from buffer */
 	received_int = UDR1;
+
+	interrupt_flag = true;
 }
 
 //###############################################################################################
