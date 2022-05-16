@@ -39,7 +39,7 @@ document.getElementById("led-blue-on").hidden = true;
 document.getElementById("led-blue-off").hidden = false;
 
 // Toggle between dark and white mode
-function myFunction() {
+function darkMode() {
     var element = document.body;
     element.classList.toggle("white-mode");
   }
@@ -102,7 +102,7 @@ document.querySelector("#disconnect").addEventListener("click", function () {
 //# with buttons
 
 document.querySelector('#rot').addEventListener('click', function() {
-    red_on ? writeData(red_0) : writeData(red_1)
+    red_on ? writeData(red_0) : writeData(red_1);
 })
 
 document.querySelector('#gruen').addEventListener('click', function() {
@@ -135,28 +135,25 @@ document.addEventListener("keydown", function(event) {
     }
     if (event.code == "KeyD" && !Motor_links_on) {
         writeData(Motor_links_1);
-        Motor_links_on = true;
     }
     if (event.code == "KeyA" && !Motor_rechts_on) {
         writeData(Motor_rechts_1);
-        Motor_rechts_on = true;
     }
 })
 
 document.addEventListener("keyup", function(event) {            // Beim Loslassen der Tasten soll der Motor ausgehen
     if (event.code == "KeyD") {
         writeData(Motor_links_0);
-        Motor_links_on = false;
     }
     if (event.code == "KeyA") {
         writeData(Motor_rechts_0);
-        Motor_rechts_on = false;
     }
 })
 
 //###############################################################################################
 // Functions /////////////////////////////////////////////////////////////////////////////
 
+// Check browser compatibility 
 function isWebBluetoothEnabled() {
     if (!navigator.bluetooth) {
         console.log("Web Bluetooth API is not available in this browser!");
@@ -166,7 +163,7 @@ function isWebBluetoothEnabled() {
     return true;
 }
 
-
+// Receive feedback from Server
 function handleNotifications(event) {
     let value = event.target.value.getUint8(0);
 
@@ -234,11 +231,12 @@ function handleNotifications(event) {
         break;
     }
 
+    //Ausgabe der empfangenen Daten in der Konsole
     var now = new Date();
     console.log('> ' + now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds() + ' Received data: ' + value);
 }
 
-
+// Send commands to Server
 function writeData(data){
     RX_Characteristic.writeValue(Uint8Array.of(data));
 }
