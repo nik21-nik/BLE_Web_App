@@ -6,14 +6,12 @@ Betreuer: Alexander Wilke
 ## How to use the Web-App
 
 1. Check if your browser is compatible with the Web Bluetooth API on this [website](https://developer.mozilla.org/en-US/docs/Web/API/Web_Bluetooth_API).
-2. Download [main.cpp](https://github.com/nik21-nik/BLE_Web_App/blob/main/MOSbot_RGB_BLE/MOSbot_RGB_BLE/main.cpp) and program the MOSbot via ISP
+2. Download [MOSbot_RGB_BLE.hex](https://github.com/nik21-nik/BLE_Web_App/blob/main/MOSbot_RGB_BLE/MOSbot_RGB_BLE/Debug/MOSbot_RGB_BLE.hex) and program the MOSbot via ISP
 3. Set up the Web-App on your device:
     - Option 1: for all devices <br>
         Visit https://blewebapp.000webhostapp.com/ (this may not be up to date with the files in this repo)
-    - Option 2: for PC <br>
+    - Option 2: Download files (suitable for PC) <br>
         Download [index.html](https://github.com/nik21-nik/BLE_Web_App/blob/main/Web_App/index.html), [script.js](https://github.com/nik21-nik/BLE_Web_App/blob/main/Web_App/script.js) and [style.css](https://github.com/nik21-nik/BLE_Web_App/blob/main/Web_App/style.css) into the same dirctory and open index.html with a compatible browser (e.g. Chrome)
-    - Option 3: for Android smartphone <br>
-        via SD-card: to be done
 4. Connect to MOSbot
 5. Interact with MOSbot
 

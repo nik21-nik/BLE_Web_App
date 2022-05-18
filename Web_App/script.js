@@ -103,23 +103,23 @@ document.querySelector("#disconnect").addEventListener("click", function () {
 
 document.querySelector('#rot').addEventListener('click', function() {
     red_on ? writeData(red_0) : writeData(red_1);
-})
+});
 
 document.querySelector('#gruen').addEventListener('click', function() {
     green_on ? writeData(green_0) : writeData(green_1);
-})
+});
 
 document.querySelector('#blau').addEventListener('click', function() {
     blue_on ? writeData(blue_0) : writeData(blue_1);
-})
+});
 
 document.querySelector('#motor_l').addEventListener('click', function() {
     Motor_links_on ? writeData(Motor_links_0) : writeData(Motor_links_1);
-})
+});
 
 document.querySelector('#motor_r').addEventListener('click', function() {
     Motor_rechts_on ? writeData(Motor_rechts_0) : writeData(Motor_rechts_1);
-})
+});
 
 //# with keyboard
 
@@ -139,7 +139,7 @@ document.addEventListener("keydown", function(event) {
     if (event.code == "KeyA" && !Motor_rechts_on) {
         writeData(Motor_rechts_1);
     }
-})
+});
 
 document.addEventListener("keyup", function(event) {            // Beim Loslassen der Tasten soll der Motor ausgehen
     if (event.code == "KeyD") {
@@ -148,7 +148,7 @@ document.addEventListener("keyup", function(event) {            // Beim Loslasse
     if (event.code == "KeyA") {
         writeData(Motor_rechts_0);
     }
-})
+});
 
 //###############################################################################################
 // Functions /////////////////////////////////////////////////////////////////////////////
@@ -227,7 +227,7 @@ function handleNotifications(event) {
         break;
 
         default:
-            console.log("Data does not match protocol!")
+            console.log("Data does not match protocol!");
         break;
     }
 
