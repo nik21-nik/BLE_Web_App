@@ -45,13 +45,12 @@ Nice to have:
 ## Hilfreiche Tutorials für den Einstieg
 
 - [Basic unterstanding of HTML(with CSS and JavaScript)](https://www.youtube.com/watch?v=qz0aGYrrlhU)
--
 
 ## Code References und Beispiele
 
-- [Communicating with Bluetooth devices over JavaScript](https://web.dev/bluetooth/)(doppelt aus Studienarbeitsbeschreibung)
+- [Communicating with Bluetooth devices over JavaScript](https://web.dev/bluetooth/) (auch aus Studienarbeitsbeschreibung)
 - [W3C Web Bluetooth Reference](https://webbluetoothcg.github.io/web-bluetooth/)
-- [Goole Chrome Web Bluetooth Samples](https://googlechrome.github.io/samples/web-bluetooth/index.html)(doppelt aus Studienarbeitsbeschreibung)
+- [Goole Chrome Web Bluetooth Samples](https://googlechrome.github.io/samples/web-bluetooth/index.html) (auch aus Studienarbeitsbeschreibung)
 - [Webtechnologien für Entwickler](https://developer.mozilla.org/de/docs/Web)
 
 ## Tipps
