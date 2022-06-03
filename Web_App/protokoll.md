@@ -1,9 +1,9 @@
 
 # Protokoll zwischen Web App und BLE-Modul bzw. µC
 
-|Wert (uint8)    |Keyboard-Taste  |Beschreibung                |                            |
-|                |                |als Steuerbefehl            |als Feedback                |
+|Wert (uint8)    |Keyboard-Taste  |Beschreibung                | Test                       |
 |----------------|----------------|----------------------------|----------------------------|
+|                |                |als Steuerbefehl            |als Feedback                |
 |0               |-               |-                           |Verbindung erfolgreich      |
 |1               |1               |Rot einschalten             |Rot eingeschaltet           |
 |2               |1               |Rot ausschalten             |Rot ausgeschaltet           |
